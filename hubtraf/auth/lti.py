@@ -4,7 +4,7 @@ import uuid
 from hubtraf.user import OperationError
 
 
-async def lti_login_data(session, log, hub_url, username, consumer_key, consumer_secret, launch_url, extra_args={}):
+async def lti_login_data(session, log, hub_url, username, consumer_key, consumer_secret, launch_url, extra_args=None):
     """
     Log in username with LTI info to hub_url
 
@@ -16,8 +16,8 @@ async def lti_login_data(session, log, hub_url, username, consumer_key, consumer
         'oauth_nonce': str(uuid.uuid4()),
         'user_id': username
     }
-
-    args.update(extra_args)
+    if extra_args:
+        args.update(extra_args)
 
     base_string = signature.construct_base_string(
         'POST',
